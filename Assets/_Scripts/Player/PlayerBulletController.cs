@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// Eddie Song 2017-06-27
+// Script to handle player bullet behavior
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,10 +26,17 @@ public class PlayerBulletController : MonoBehaviour {
 		
 	}
 
-	// what happens when bullet collides with an enemy
+	// What happens when bullet collides with an enemy
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.CompareTag ("Enemy")) {
 			Debug.Log ("Enemy Hit! " + Time.time);
+			Destroy (other.gameObject);
+			Destroy (gameObject);
 		}
+	}
+
+	// What happens when bullet is off-screen
+	void OnBecameInvisible () {
+		Destroy (gameObject);
 	}
 }
