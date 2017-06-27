@@ -1,11 +1,11 @@
 ﻿// Eddie Song 2017-06-27
-// Player Ship Controller script, handles player movement/firing
+// Player Movement Controller script, handles player movement/firing
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerMovementController : MonoBehaviour {
 
 
 	// configurable properties of player ship
@@ -36,4 +36,5 @@ public class PlayerController : MonoBehaviour {
 		rb2d.position = new Vector2 (Mathf.Clamp (rb2d.position.x, xRange.x, xRange.y), Mathf.Clamp (rb2d.position.y, yRange.x, yRange.y));
 
 	}
+
 }
