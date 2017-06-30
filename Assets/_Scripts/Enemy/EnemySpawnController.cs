@@ -8,7 +8,10 @@ using UnityEngine;
 public class EnemySpawnController : MonoBehaviour {
 
 	[SerializeField]
-	private GameObject enemy;
+	private GameObject enemyShipPrefab;
+
+	[SerializeField]
+	private EnemyShipConfigObject enemyShipConfig;
 
 	[SerializeField]
 	private int enemyCount;
@@ -32,7 +35,7 @@ public class EnemySpawnController : MonoBehaviour {
 	// Coroutine that spawns a single enemy
 	IEnumerator SpawnEnemy () {
 		for (int i = 0; i <= enemyCount - 1; i++) {
-			Instantiate (enemy, startPoint + (endPoint - startPoint) * i / (enemyCount - 1), Quaternion.identity);
+			Instantiate (enemyShipPrefab, startPoint + (endPoint - startPoint) * i / (enemyCount - 1), Quaternion.identity).GetComponent<EnemyMovementController>().LoadConfig(enemyShipConfig);
 			yield return new WaitForSeconds (delayBetweenEnemies);
 		}
 	}

@@ -25,4 +25,8 @@ public class EnemyMovementController : MonoBehaviour {
 	void Update () {
 		
 	}
+
+	public void LoadConfig (EnemyShipConfigObject enemyShipConfig) {
+		transform.Find ("Enemy Ship Sprite").GetComponent<SpriteRenderer> ().color = enemyShipConfig.thisColor;
+	}
 }
