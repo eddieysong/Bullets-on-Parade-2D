@@ -32,11 +32,7 @@ public class PlayerBulletController : MonoBehaviour {
 			Debug.Log ("Enemy Hit! " + Time.time);
 			Destroy (other.gameObject);
 			Destroy (gameObject);
-		}
+		} 
 	}
 
-	// What happens when bullet is off-screen
-	void OnBecameInvisible () {
-		Destroy (gameObject);
-	}
 }

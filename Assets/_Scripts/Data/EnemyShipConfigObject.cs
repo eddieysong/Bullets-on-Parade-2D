@@ -5,7 +5,7 @@ using System.Collections;
 public class EnemyShipConfigObject : ScriptableObject {
 	public string objectName = "New EnemyShipConfigObject";
 	public int enemyShipID = 0;
-//	public Sprite sprite;
+	public GameObject enemyShip;
 	public Color thisColor = Color.white;
 //	public Vector3[] spawnPoints;
 }

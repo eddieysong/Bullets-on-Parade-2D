@@ -11,9 +11,9 @@ public class PlayerWeaponController : MonoBehaviour {
 	private GameObject bullet;
 
 	[SerializeField]
-	private float damage, fireCoolDown;
+	private float damage, fireRate;
 
-	private float fireCDTimer;
+	private float fireTimer;
 
 	// Use this for initialization
 	void Start () {
@@ -22,9 +22,9 @@ public class PlayerWeaponController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Time.time > fireCDTimer + fireCoolDown) {
+		if (Time.time > fireTimer + 1 / fireRate) {
 			Instantiate (bullet, transform.position, Quaternion.identity);
-			fireCDTimer = Time.time;
+			fireTimer = Time.time;
 		}
 	}
 

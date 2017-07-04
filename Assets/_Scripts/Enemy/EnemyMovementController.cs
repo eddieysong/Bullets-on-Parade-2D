@@ -29,4 +29,17 @@ public class EnemyMovementController : MonoBehaviour {
 	public void LoadConfig (EnemyShipConfigObject enemyShipConfig) {
 		transform.Find ("Enemy Ship Sprite").GetComponent<SpriteRenderer> ().color = enemyShipConfig.thisColor;
 	}
+
+	// What happens when enemy collides with something
+	void OnTriggerEnter2D (Collider2D other) {
+		if (other.CompareTag ("Player")) {
+			Debug.Log ("Player Hit! " + Time.time);
+			//			Destroy (other.gameObject);
+			Destroy (gameObject);
+		}
+		else if (other.CompareTag ("Boundary")) {
+			Destroy (gameObject);
+
+		}
+	}
 }
