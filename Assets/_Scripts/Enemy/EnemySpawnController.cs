@@ -8,25 +8,10 @@ using UnityEngine;
 public class EnemySpawnController : MonoBehaviour {
 
 	[SerializeField]
-	private GameObject enemyShipPrefab;
+	private SpawningPatternConfigObject [] waves;
 
 	[SerializeField]
-	private EnemyShipConfigObject enemyShipConfig;
-
-	[SerializeField]
-	private EnemyWeaponConfigObject enemyWeaponConfig;
-
-//	[SerializeField]
-//	private FiringPatternConfigObject firingPatternConfig;
-
-	[SerializeField]
-	private int enemyCount;
-
-	[SerializeField]
-	private float delayBetweenEnemies;
-
-	[SerializeField]
-	private Vector2 startPoint, endPoint;
+	private float timeBetweenWaves;
 
 	// Use this for initialization
 	void Start () {
@@ -40,16 +25,21 @@ public class EnemySpawnController : MonoBehaviour {
 
 	// Coroutine that spawns a single enemy
 	IEnumerator SpawnEnemy () {
-		while (true) {
-			for (int i = 0; i <= enemyCount - 1; i++) {
-				GameObject newEnemy = Instantiate (enemyShipPrefab, startPoint + (endPoint - startPoint) * i / (enemyCount - 1), Quaternion.identity);
-				newEnemy.GetComponent<EnemyMovementController> ().LoadConfig (enemyShipConfig);
-				Debug.Log (newEnemy.GetComponentsInChildren<EnemyWeaponController> ().Length);
-				foreach (EnemyWeaponController enemyWeaponController in newEnemy.GetComponentsInChildren<EnemyWeaponController> ()) {
-					enemyWeaponController.LoadConfig (enemyWeaponConfig);
+		foreach (SpawningPatternConfigObject wave in waves) {
+			for (int i = 0; i < wave.enemyCount; i++) {
+				GameObject newEnemy = Instantiate (wave.enemyShipConfig.enemyShipPrefab, wave.startPoint + (wave.endPoint - wave.startPoint) * i / Mathf.Max(1, wave.enemyCount - 1), Quaternion.identity);
+				newEnemy.GetComponent<EnemyMovementController> ().LoadConfig (wave.enemyShipConfig);
+				newEnemy.GetComponent<EnemyMovementController> ().SetDestination (wave.destStartPoint + (wave.destEndPoint - wave.destStartPoint) * i / Mathf.Max(1, wave.enemyCount - 1));
+				EnemyWeaponController[] enemyWeaponControllers = newEnemy.GetComponentsInChildren<EnemyWeaponController> ();
+				for(int j = 0; j < Mathf.Min(wave.enemyShipConfig.enemyWeaponConfig.Length, enemyWeaponControllers.Length); j ++) {
+					Debug.Log ("xx" + j.ToString());
+					if (wave.enemyShipConfig.enemyWeaponConfig [j] != null) {
+						enemyWeaponControllers[j].LoadConfig (wave.enemyShipConfig.enemyWeaponConfig[j]);
+					}
 				}
-				yield return new WaitForSeconds (delayBetweenEnemies);
+				yield return new WaitForSeconds (wave.delayBetweenEnemies);
 			}
+			yield return new WaitForSeconds (timeBetweenWaves);
 		}
 	}
 }

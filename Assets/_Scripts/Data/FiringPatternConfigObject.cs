@@ -5,8 +5,10 @@ using System.Collections;
 public class FiringPatternConfigObject : ScriptableObject {
 	public string objectName = "New FiringPatternConfigObject";
 	public int firingPatternID = 0;
-	// each Vector3 contains: x = travel speed, y = rotation, z = delay after firing
-	public Vector3[] bulletCycle;
+	public int numberOfShots = 1;
+	public float bulletSpeed = 5f;
+	public float fireDuration = 1f;
+	public float startAngle, endAngle;
 	public Color spriteColor = Color.white;
 
 }

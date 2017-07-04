@@ -15,18 +15,17 @@ public class EnemyMovementController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		rb2d = GetComponent<Rigidbody2D> ();
-		// Movement according to input axis
-		rb2d.velocity = new Vector2 (0, -1) * speed;
-
+		
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	public void SetDestination (Vector3 dest) {
+		rb2d = GetComponent<Rigidbody2D> ();
+		rb2d.velocity = (dest - transform.position).normalized * speed;
 	}
 
 	public void LoadConfig (EnemyShipConfigObject enemyShipConfig) {
+		speed = enemyShipConfig.speed;
 		transform.Find ("Enemy Ship Sprite").GetComponent<SpriteRenderer> ().color = enemyShipConfig.thisColor;
 	}
 
@@ -42,4 +41,5 @@ public class EnemyMovementController : MonoBehaviour {
 
 		}
 	}
+
 }

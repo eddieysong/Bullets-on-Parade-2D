@@ -5,7 +5,9 @@ using System.Collections;
 public class EnemyShipConfigObject : ScriptableObject {
 	public string objectName = "New EnemyShipConfigObject";
 	public int enemyShipID = 0;
-	public GameObject enemyShip;
+	public GameObject enemyShipPrefab;
+	public EnemyWeaponConfigObject [] enemyWeaponConfig;
+	public float speed;
 	public Color thisColor = Color.white;
 //	public Vector3[] spawnPoints;
 }

@@ -7,6 +7,7 @@ public class EnemyWeaponConfigObject : ScriptableObject {
 	public int enemyWeaponID = 0;
 	public GameObject bullet;
 	public FiringPatternConfigObject firingPattern;
+	public float delayBetweenFiring = 1f;
 	public float fireRateMultiplier = 1f;
 	public Color spriteColor = Color.white;
 }
