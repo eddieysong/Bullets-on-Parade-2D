@@ -1,5 +1,5 @@
 ﻿// Eddie Song 2017-06-27
-// Player Movement Controller script, handles player movement/firing
+// Player Movement Controller script, handles player movement
 
 using System.Collections;
 using System.Collections.Generic;

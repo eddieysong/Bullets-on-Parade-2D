@@ -10,6 +10,8 @@ public class PlayerBulletController : MonoBehaviour {
 	[SerializeField]
 	private float speed = 5f;
 
+	private float damage = 10f;
+
 	// handles to components
 	private Rigidbody2D rb2d;
 
@@ -18,7 +20,7 @@ public class PlayerBulletController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
-		rb2d.velocity = new Vector2 (0, speed);
+		rb2d.velocity = transform.up * speed;
 	}
 	
 	// Update is called once per frame
@@ -26,13 +28,19 @@ public class PlayerBulletController : MonoBehaviour {
 		
 	}
 
+	void SetDamage(float damage) {
+		this.damage = damage;
+	}
+
 	// What happens when bullet collides with an enemy
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.CompareTag ("Enemy")) {
 			Debug.Log ("Enemy Hit! " + Time.time);
-			Destroy (other.gameObject);
+			other.gameObject.SendMessage ("Hit", damage, SendMessageOptions.DontRequireReceiver);
 			Destroy (gameObject);
-		} 
+		} else if (other.CompareTag ("Boundary")) {
+			Destroy (gameObject);
+		}
 	}
 
 }
