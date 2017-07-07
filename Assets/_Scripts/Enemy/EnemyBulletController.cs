@@ -23,7 +23,7 @@ public class EnemyBulletController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.CompareTag ("Player")) {
 			Debug.Log ("Player Hit! " + Time.time);
-//			Destroy (other.gameObject);
+			other.gameObject.SendMessage ("Hit", SendMessageOptions.DontRequireReceiver);
 			Destroy (gameObject);
 		}
 		else if (other.CompareTag ("Boundary")) {

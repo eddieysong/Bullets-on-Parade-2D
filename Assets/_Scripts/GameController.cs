@@ -10,6 +10,10 @@ public class GameController : MonoBehaviour {
 	[SerializeField]
 	private Vector2 xRange, yRange;
 
+	// handles to prefabs
+	[SerializeField]
+	private GameObject explosion;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -20,6 +24,9 @@ public class GameController : MonoBehaviour {
 		
 	}
 
+	public void EnemyKilled (Vector2 enemyPos, float enemyValue) {
+		Destroy (Instantiate (explosion, enemyPos, Quaternion.identity), 2f);
+	}
 
 	// g/setters
 	public Vector2 XRange {

@@ -7,18 +7,23 @@ using UnityEngine;
 
 public class EnemyMovementController : MonoBehaviour {
 
+	// configurable properties of enemy
 	[SerializeField]
 	private float speed = 5f;
-
 	private float hp = 100f;
+	private float value = 1f;
+
 	private bool isMirror = false;
 
 	// handles to components
 	private Rigidbody2D rb2d;
 
+	// handles to other controllers
+	private GameController gameController;
+
 	// Use this for initialization
 	void Start () {
-		
+		gameController = GameObject.Find ("Game Controller").GetComponent<GameController> ();
 	}
 
 	void Hit (float damage) {
@@ -29,6 +34,7 @@ public class EnemyMovementController : MonoBehaviour {
 	}
 
 	void Die () {
+		gameController.EnemyKilled (transform.position, 1f);
 		Destroy (gameObject);
 	}
 

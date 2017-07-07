@@ -11,6 +11,7 @@ public class PlayerMovementController : MonoBehaviour {
 	// configurable properties of player ship
 	[SerializeField]
 	private float movespeed = 10f;
+	private int lives = 3;
 
 	// configuration read from other scripts
 	private Vector2 xRange, yRange;
@@ -18,13 +19,19 @@ public class PlayerMovementController : MonoBehaviour {
 	// handles to components
 	private Rigidbody2D rb2d;
 
+	// handles to other controllers
+	private UIController uiController;
+
 
 
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
+		uiController = GameObject.Find ("Canvas").GetComponent<UIController> ();
 		xRange = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ().XRange;
 		yRange = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ().YRange;
+
+		uiController.SendMessage ("RefreshLives", lives, SendMessageOptions.DontRequireReceiver);
 	}
 	
 	// Update is called once per frame
@@ -35,6 +42,15 @@ public class PlayerMovementController : MonoBehaviour {
 		// Clamp position of player ship so it doesn't go outside boundaries
 		rb2d.position = new Vector2 (Mathf.Clamp (rb2d.position.x, xRange.x, xRange.y), Mathf.Clamp (rb2d.position.y, yRange.x, yRange.y));
 
+	}
+
+	void Hit () {
+		lives--;
+		uiController.SendMessage ("RefreshLives", lives, SendMessageOptions.DontRequireReceiver);
+		if (lives <= 0) {
+			Debug.Log ("game over!");
+			Destroy (gameObject);
+		}
 	}
 
 }

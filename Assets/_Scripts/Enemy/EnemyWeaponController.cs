@@ -8,6 +8,9 @@ public class EnemyWeaponController : MonoBehaviour
 	[SerializeField]
 	private EnemyWeaponConfigObject weaponConfig;
 
+	[SerializeField]
+	private float delayBeforeFiring;
+
 	private float isMirror;
 	//	[SerializeField]
 	//	private FiringPatternConfigObject firingPattern;
@@ -38,6 +41,7 @@ public class EnemyWeaponController : MonoBehaviour
 
 	IEnumerator FireCycle ()
 	{
+		yield return new WaitForSeconds (delayBeforeFiring);
 		while (this.enabled) {
 
 			for (int i = 0; i < weaponConfig.firingPattern.numberOfShots; i++) {
