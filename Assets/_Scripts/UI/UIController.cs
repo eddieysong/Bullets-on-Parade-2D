@@ -8,7 +8,7 @@ public class UIController : MonoBehaviour {
 	private Text lives;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		lives = GameObject.Find ("Canvas/Lives Display").GetComponent<Text>();
 	}
 	
