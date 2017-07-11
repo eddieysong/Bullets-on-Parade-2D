@@ -12,8 +12,13 @@ public class EnemySpawnController : MonoBehaviour {
 
 	private float isMirror;
 
+	// handles to other controllers
+	private UIController uiController;
+
+
 	// Use this for initialization
 	void Start () {
+		uiController = GameObject.Find ("UI Controller").GetComponent<UIController> ();
 		StartCoroutine (SpawnEnemy());
 	}
 	
@@ -29,10 +34,15 @@ public class EnemySpawnController : MonoBehaviour {
 			// if the wave should be spawned in "mirror" mode, then multiply the start and end positions by -1
 			isMirror = wave.isMirror ? -1 : 1;
 
+			Debug.Log ("Displaying Wave Message");
+			// queuing messages to display
+			if (wave.messagesToDisplay.Length > 0) {
+				uiController.SendMessage ("QueueMessages", wave.messagesToDisplay, SendMessageOptions.DontRequireReceiver);
+			}
+
 			for (int i = 0; i < wave.enemyCount; i++) {
 				Vector2 spawnPoint = wave.startPoint + (wave.endPoint - wave.startPoint) * i / Mathf.Max(1, wave.enemyCount - 1);
 				spawnPoint.x *= isMirror;
-
 
 				Debug.Log ("Spawning " + wave.enemyShipConfig.name);
 

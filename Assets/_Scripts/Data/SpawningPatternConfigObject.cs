@@ -6,7 +6,8 @@ using System.Collections;
 
 [CreateAssetMenu(fileName = "Data", menuName = "SpawningPattern", order = 4)]
 public class SpawningPatternConfigObject : ScriptableObject {
-	
+
+	public string [] messagesToDisplay;
 	public EnemyShipConfigObject enemyShipConfig;
 	public int enemyCount;
 	public float delayBetweenEnemies;

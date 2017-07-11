@@ -10,19 +10,30 @@ public class UIController : MonoBehaviour {
 
 	private Text lives;
 
+	// handles to UI elements in scene
 	private GameObject bossHPCanvas;
 	private RectTransform bossHPFill;
+
+	private GameObject messageCanvas;
+	private Text messageText;
+
+	// queue to hold messages
+	private Queue<string> messagesQueue = new Queue<string>();
 
 	// Use this for initialization
 	void Awake () {
 		lives = GameObject.Find ("Player Status Canvas/Lives Display").GetComponent<Text>();
 		bossHPCanvas = GameObject.Find ("Boss HP Canvas");
+		messageCanvas = GameObject.Find ("Message Canvas");
 
 	}
 
 	void Start () {
 		bossHPFill = bossHPCanvas.transform.Find ("Gauge/Fill").GetComponent<RectTransform>();
 		bossHPCanvas.SetActive (false);
+
+		messageText = messageCanvas.transform.Find ("Panel/Text").GetComponent<Text> ();
+		messageCanvas.SetActive (false);
 	}
 	
 	// Update is called once per frame
@@ -40,5 +51,37 @@ public class UIController : MonoBehaviour {
 
 	void RefreshBossHP (float proportionHP) {
 		bossHPFill.localScale = new Vector2 (proportionHP, 1);
+	}
+
+	void QueueMessages (string [] messages) {
+		foreach (string msg in messages) {
+			messagesQueue.Enqueue (msg);
+		}
+		ShowNextMessage ();
+	}
+
+	void ShowNextMessage () {
+		if (messagesQueue.Count > 0) {
+			messageCanvas.SetActive (true);
+			messageText.text = messagesQueue.Dequeue();
+			PauseGame (true);
+		}
+	}
+
+	public void HideMessage () {
+		messageCanvas.SetActive (false);
+		if (messagesQueue.Count > 0) {
+			ShowNextMessage ();
+		} else {
+			PauseGame (false);
+		}
+	}
+
+	void PauseGame(bool pauseOn) {
+		if (pauseOn) {
+			Time.timeScale = 0f;
+		} else {
+			Time.timeScale = 1f;
+		}
 	}
 }
