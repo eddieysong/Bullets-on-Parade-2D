@@ -12,12 +12,16 @@ public class PlayerMovementController : MonoBehaviour {
 	[SerializeField]
 	private float movespeed = 10f;
 	private int lives = 3;
+	private bool invulnerable = false;
+	private float invulnerableTime = 2.5f;
 
 	// configuration read from other scripts
 	private Vector2 xRange, yRange;
 
 	// handles to components
 	private Rigidbody2D rb2d;
+	[SerializeField]
+	private GameObject playerHitSoundPackage;
 
 	// handles to other controllers
 	private UIController uiController;
@@ -45,12 +49,22 @@ public class PlayerMovementController : MonoBehaviour {
 	}
 
 	void Hit () {
-		lives--;
-		uiController.SendMessage ("RefreshLives", lives, SendMessageOptions.DontRequireReceiver);
-		if (lives <= 0) {
-			Debug.Log ("game over!");
-			Destroy (gameObject);
+		if (!invulnerable)
+		{
+			lives--;
+			StartCoroutine (TurnInvulnerable ());
+			Destroy (Instantiate (playerHitSoundPackage, transform.position, Quaternion.identity), invulnerableTime);
+			uiController.SendMessage ("RefreshLives", lives, SendMessageOptions.DontRequireReceiver);
+			if (lives <= 0) {
+				Debug.Log ("game over!");
+				Destroy (gameObject);
+			}
 		}
 	}
 
+	IEnumerator TurnInvulnerable() {
+		invulnerable = true;
+		yield return new WaitForSeconds (invulnerableTime);
+		invulnerable = false;
+	}
 }
