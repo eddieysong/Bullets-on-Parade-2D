@@ -11,6 +11,7 @@ public class EnemyMovementController : MonoBehaviour {
 	[SerializeField]
 	protected float speed = 5f;
 	protected float hp = 100f;
+	protected float maxHP = 100f;
 	protected float value = 1f;
 
 	protected bool isMirror = false;
@@ -22,10 +23,12 @@ public class EnemyMovementController : MonoBehaviour {
 
 	// handles to other controllers
 	protected GameController gameController;
+	protected UIController uiController;
 
 	// Use this for initialization
 	void Start () {
 		gameController = GameObject.Find ("Game Controller").GetComponent<GameController> ();
+		uiController = GameObject.Find ("UI Controller").GetComponent<UIController> ();
 	}
 
 	void Hit (float damage) {
@@ -49,6 +52,7 @@ public class EnemyMovementController : MonoBehaviour {
 
 	public void LoadConfig (EnemyShipConfigObject enemyShipConfig) {
 		this.hp = enemyShipConfig.hp;
+		this.maxHP = enemyShipConfig.hp;
 		this.speed = enemyShipConfig.speed;
 		this.isBoss = enemyShipConfig.isBoss;
 		transform.Find ("Enemy Ship Sprite").GetComponent<SpriteRenderer> ().color = enemyShipConfig.thisColor;

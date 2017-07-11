@@ -20,18 +20,23 @@ public class PlayerMovementController : MonoBehaviour {
 
 	// handles to components
 	private Rigidbody2D rb2d;
+	private Animator anim;
 	[SerializeField]
 	private GameObject playerHitSoundPackage;
 
 	// handles to other controllers
 	private UIController uiController;
+	private GameObject simulatedInfoCanvas;
 
 
 
 	// Use this for initialization
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
-		uiController = GameObject.Find ("Canvas").GetComponent<UIController> ();
+		anim = GetComponent<Animator> ();
+		uiController = GameObject.Find ("UI Controller").GetComponent<UIController> ();
+		simulatedInfoCanvas = GameObject.Find ("Simulated Info Canvas");
+		simulatedInfoCanvas.SetActive (false);
 		xRange = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ().XRange;
 		yRange = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ().YRange;
 
@@ -52,19 +57,29 @@ public class PlayerMovementController : MonoBehaviour {
 		if (!invulnerable)
 		{
 			lives--;
-			StartCoroutine (TurnInvulnerable ());
-			Destroy (Instantiate (playerHitSoundPackage, transform.position, Quaternion.identity), invulnerableTime);
 			uiController.SendMessage ("RefreshLives", lives, SendMessageOptions.DontRequireReceiver);
+
 			if (lives <= 0) {
+				// Die();
 				Debug.Log ("game over!");
 				Destroy (gameObject);
+				return;
 			}
+
+			StartCoroutine (TurnInvulnerable ());
+
 		}
 	}
 
 	IEnumerator TurnInvulnerable() {
+		Destroy (Instantiate (playerHitSoundPackage, transform.position, Quaternion.identity), invulnerableTime);
+
 		invulnerable = true;
+		anim.SetTrigger ("TransitionFlash");
+		simulatedInfoCanvas.SetActive (true);
 		yield return new WaitForSeconds (invulnerableTime);
 		invulnerable = false;
+		anim.SetTrigger ("TransitionNormal");
+		simulatedInfoCanvas.SetActive (false);
 	}
 }

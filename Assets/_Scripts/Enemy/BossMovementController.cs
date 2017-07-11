@@ -24,19 +24,27 @@ public class BossMovementController : EnemyMovementController {
 	// Use this for initialization
 	void Start () {
 		gameController = GameObject.Find ("Game Controller").GetComponent<GameController> ();
+		uiController = GameObject.Find ("UI Controller").GetComponent<UIController> ();
 		rb2d = GetComponent<Rigidbody2D> ();
 		StartCoroutine (ChangeDirection ());
+		uiController.SendMessage ("ToggleBossHP", true, SendMessageOptions.DontRequireReceiver);
+		uiController.SendMessage ("RefreshBossHP", 1f, SendMessageOptions.DontRequireReceiver);
 	}
 
-//	void Hit (float damage) {
-//		this.hp -= damage;
-//		if (hp <= 0) {
-//			Die ();
-//		}
-//	}
+	new void Hit (float damage) {
+		this.hp -= damage;
+		Debug.Log (string.Format("Enemy has {0} hp remaining", hp.ToString()));
+		uiController.SendMessage ("RefreshBossHP", Mathf.Clamp(hp / maxHP, 0f, 1f), SendMessageOptions.DontRequireReceiver);
+
+		if (hp <= 0) {
+			Die ();
+		}
+	}
 
 	void Die () {
 		gameController.EnemyKilled (transform.position, 1f);
+		uiController.SendMessage ("ToggleBossHP", false, SendMessageOptions.DontRequireReceiver);
+
 		Destroy (gameObject);
 	}
 
