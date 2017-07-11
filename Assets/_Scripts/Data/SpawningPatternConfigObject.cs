@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿// Eddie Song 2017-07-04
+// Scriptable object to contain spawning patterns (waves)
+
+using UnityEngine;
 using System.Collections;
 
 [CreateAssetMenu(fileName = "Data", menuName = "SpawningPattern", order = 4)]

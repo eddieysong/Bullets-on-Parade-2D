@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿// Eddie Song 2017-07-04
+// Script to control the behavior of a single enemy weapon
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

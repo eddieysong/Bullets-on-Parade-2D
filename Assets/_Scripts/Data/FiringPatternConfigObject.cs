@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿// Eddie Song 2017-07-04
+// Scriptable object to contain enemy firing pattern data
+
+using UnityEngine;
 using System.Collections;
 
 [CreateAssetMenu(fileName = "Data", menuName = "FiringPattern", order = 3)]

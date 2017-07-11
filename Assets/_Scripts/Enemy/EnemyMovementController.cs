@@ -9,17 +9,19 @@ public class EnemyMovementController : MonoBehaviour {
 
 	// configurable properties of enemy
 	[SerializeField]
-	private float speed = 5f;
-	private float hp = 100f;
-	private float value = 1f;
+	protected float speed = 5f;
+	protected float hp = 100f;
+	protected float value = 1f;
 
-	private bool isMirror = false;
+	protected bool isMirror = false;
+	protected bool isBoss = false;
+
 
 	// handles to components
-	private Rigidbody2D rb2d;
+	protected Rigidbody2D rb2d;
 
 	// handles to other controllers
-	private GameController gameController;
+	protected GameController gameController;
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +30,7 @@ public class EnemyMovementController : MonoBehaviour {
 
 	void Hit (float damage) {
 		this.hp -= damage;
+		Debug.Log (string.Format("Enemy has {0} hp remaining", hp.ToString()));
 		if (hp <= 0) {
 			Die ();
 		}
@@ -38,7 +41,7 @@ public class EnemyMovementController : MonoBehaviour {
 		Destroy (gameObject);
 	}
 
-	// Update is called once per frame
+	// Sets the enemy's movement destination
 	public void SetDestination (Vector3 dest) {
 		rb2d = GetComponent<Rigidbody2D> ();
 		rb2d.velocity = (dest - transform.position).normalized * speed;
@@ -47,19 +50,21 @@ public class EnemyMovementController : MonoBehaviour {
 	public void LoadConfig (EnemyShipConfigObject enemyShipConfig) {
 		this.hp = enemyShipConfig.hp;
 		this.speed = enemyShipConfig.speed;
+		this.isBoss = enemyShipConfig.isBoss;
 		transform.Find ("Enemy Ship Sprite").GetComponent<SpriteRenderer> ().color = enemyShipConfig.thisColor;
 	}
 
 	// What happens when enemy collides with something
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.CompareTag ("Player")) {
-			Debug.Log ("Player Hit! " + Time.time);
-			//			Destroy (other.gameObject);
-			Destroy (gameObject);
+//			Debug.Log ("Player Hit! " + Time.time);
+//			//			Destroy (other.gameObject);
+//			Destroy (gameObject);
 		}
 		else if (other.CompareTag ("Boundary")) {
-			Destroy (gameObject);
-
+			if (!isBoss) {
+				Destroy (gameObject);
+			}
 		}
 	}
 

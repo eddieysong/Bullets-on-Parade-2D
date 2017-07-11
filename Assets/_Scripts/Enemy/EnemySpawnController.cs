@@ -33,6 +33,9 @@ public class EnemySpawnController : MonoBehaviour {
 				Vector2 spawnPoint = wave.startPoint + (wave.endPoint - wave.startPoint) * i / Mathf.Max(1, wave.enemyCount - 1);
 				spawnPoint.x *= isMirror;
 
+
+				Debug.Log ("Spawning " + wave.enemyShipConfig.name);
+
 				GameObject newEnemy = Instantiate (wave.enemyShipConfig.enemyShipPrefab, spawnPoint, Quaternion.identity);
 				newEnemy.GetComponent<EnemyMovementController> ().IsMirror = wave.isMirror;
 				newEnemy.GetComponent<EnemyMovementController> ().LoadConfig (wave.enemyShipConfig);
@@ -43,7 +46,6 @@ public class EnemySpawnController : MonoBehaviour {
 				newEnemy.GetComponent<EnemyMovementController> ().SetDestination (destPoint);
 				EnemyWeaponController[] enemyWeaponControllers = newEnemy.GetComponentsInChildren<EnemyWeaponController> ();
 				for(int j = 0; j < Mathf.Min(wave.enemyShipConfig.enemyWeaponConfig.Length, enemyWeaponControllers.Length); j ++) {
-//					Debug.Log ("xx" + j.ToString());
 					if (wave.enemyShipConfig.enemyWeaponConfig [j] != null) {
 						enemyWeaponControllers[j].LoadConfig (wave.enemyShipConfig.enemyWeaponConfig[j]);
 					}
