@@ -8,6 +8,8 @@ using UnityEngine;
 public class EnemySpawnController : MonoBehaviour {
 
 	[SerializeField]
+	private AllLevelsConfigObject allLevels;
+
 	private LevelWavesConfigObject wavesData;
 
 	private float isMirror;
@@ -19,6 +21,8 @@ public class EnemySpawnController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		uiController = GameObject.Find ("UI Controller").GetComponent<UIController> ();
+		Debug.Log (SceneParameters.currentLevel);
+		wavesData = allLevels.levels [SceneParameters.currentLevel];
 		StartCoroutine (SpawnEnemy());
 	}
 	
@@ -35,8 +39,11 @@ public class EnemySpawnController : MonoBehaviour {
 			isMirror = wave.isMirror ? -1 : 1;
 
 			Debug.Log ("Displaying Wave Message");
+//			Debug.Log (wave.messagesToDisplay.Length);
 			// queuing messages to display
-			if (wave.messagesToDisplay.Length > 0) {
+			if (wave.messagesToDisplay != null) {
+//			if (wave.messagesToDisplay.Length > 0) {
+
 				uiController.SendMessage ("QueueMessages", wave.messagesToDisplay, SendMessageOptions.DontRequireReceiver);
 			}
 
