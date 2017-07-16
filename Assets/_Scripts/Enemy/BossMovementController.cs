@@ -26,7 +26,7 @@ public class BossMovementController : EnemyMovementController {
 		gameController = GameObject.Find ("Game Controller").GetComponent<GameController> ();
 		uiController = GameObject.Find ("UI Controller").GetComponent<UIController> ();
 		rb2d = GetComponent<Rigidbody2D> ();
-		StartCoroutine (ChangeDirection ());
+		StartCoroutine (ChangeDirection());
 		uiController.SendMessage ("ToggleBossHP", true, SendMessageOptions.DontRequireReceiver);
 		uiController.SendMessage ("RefreshBossHP", 1f, SendMessageOptions.DontRequireReceiver);
 	}
@@ -42,10 +42,16 @@ public class BossMovementController : EnemyMovementController {
 	}
 
 	void Die () {
-		gameController.EnemyKilled (transform.position, 1f);
+		gameController.BossKilled (transform.position, 1f);
 		uiController.SendMessage ("ToggleBossHP", false, SendMessageOptions.DontRequireReceiver);
-
-		Destroy (gameObject);
+		rb2d.velocity = new Vector2 (0, 0);
+		StopAllCoroutines ();
+		GetComponent<Collider2D> ().enabled = false;
+		foreach (EnemyWeaponController weapon in GetComponentsInChildren<EnemyWeaponController>()) {
+			weapon.StopAllCoroutines ();
+			weapon.enabled = false;
+		}
+		Destroy (gameObject, 4f);
 	}
 
 	// Sets the ship to go toward a random Destination

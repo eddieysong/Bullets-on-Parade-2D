@@ -25,6 +25,7 @@ public class PlayerMovementController : MonoBehaviour {
 	private GameObject playerHitSoundPackage;
 
 	// handles to other controllers
+	private GameController gameController;
 	private UIController uiController;
 	private GameObject simulatedInfoCanvas;
 
@@ -34,6 +35,7 @@ public class PlayerMovementController : MonoBehaviour {
 	void Start () {
 		rb2d = GetComponent<Rigidbody2D> ();
 		anim = GetComponent<Animator> ();
+		gameController = GameObject.Find ("Game Controller").GetComponent<GameController> ();
 		uiController = GameObject.Find ("UI Controller").GetComponent<UIController> ();
 		simulatedInfoCanvas = GameObject.Find ("Simulated Info Canvas");
 		simulatedInfoCanvas.SetActive (false);
@@ -60,8 +62,7 @@ public class PlayerMovementController : MonoBehaviour {
 			uiController.SendMessage ("RefreshLives", lives, SendMessageOptions.DontRequireReceiver);
 
 			if (lives <= 0) {
-				// Die();
-				Debug.Log ("game over!");
+				gameController.PlayerKilled (transform.position);
 				Destroy (gameObject);
 				return;
 			}

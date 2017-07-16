@@ -38,12 +38,18 @@ public class EnemySpawnController : MonoBehaviour {
 			// if the wave should be spawned in "mirror" mode, then multiply the start and end positions by -1
 			isMirror = wave.isMirror ? -1 : 1;
 
+			if (wave.enemyShipConfig.isBoss) {
+				yield return new WaitForSeconds (2.5f);
+				uiController.SendMessage ("QueueMessages", new string[1] {
+					"A powerful enemy is heading this way!\n" +
+					"Be prepared for a challenging battle!"
+				});
+				yield return new WaitForSeconds (2.5f);
+			}
+
 			Debug.Log ("Displaying Wave Message");
-//			Debug.Log (wave.messagesToDisplay.Length);
 			// queuing messages to display
 			if (wave.messagesToDisplay != null) {
-//			if (wave.messagesToDisplay.Length > 0) {
-
 				uiController.SendMessage ("QueueMessages", wave.messagesToDisplay, SendMessageOptions.DontRequireReceiver);
 			}
 
