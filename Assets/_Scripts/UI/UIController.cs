@@ -17,6 +17,8 @@ public class UIController : MonoBehaviour {
 	private GameObject messageCanvas;
 	private Text messageText;
 
+	private GameObject simulatedInfoCanvas;
+
 	// queue to hold messages
 	private Queue<string> messagesQueue = new Queue<string>();
 
@@ -25,6 +27,7 @@ public class UIController : MonoBehaviour {
 		lives = GameObject.Find ("Player Status Canvas/Lives Display").GetComponent<Text>();
 		bossHPCanvas = GameObject.Find ("Boss HP Canvas");
 		messageCanvas = GameObject.Find ("Message Canvas");
+		simulatedInfoCanvas = GameObject.Find ("Simulated Info Canvas");
 
 	}
 
@@ -57,11 +60,14 @@ public class UIController : MonoBehaviour {
 		foreach (string msg in messages) {
 			messagesQueue.Enqueue (msg);
 		}
-		ShowNextMessage ();
+		StartCoroutine(ShowNextMessage ());
 	}
 
-	void ShowNextMessage () {
-		if (messagesQueue.Count > 0) {
+	IEnumerator ShowNextMessage () {
+		if (!messageCanvas.activeInHierarchy && messagesQueue.Count > 0) {
+			while (simulatedInfoCanvas.activeInHierarchy) {
+				yield return new WaitForSeconds (0.1f);
+			}
 			messageCanvas.SetActive (true);
 			messageText.text = messagesQueue.Dequeue();
 			PauseGame (true);
@@ -71,7 +77,7 @@ public class UIController : MonoBehaviour {
 	public void HideMessage () {
 		messageCanvas.SetActive (false);
 		if (messagesQueue.Count > 0) {
-			ShowNextMessage ();
+			StartCoroutine(ShowNextMessage ());
 		} else {
 			PauseGame (false);
 		}

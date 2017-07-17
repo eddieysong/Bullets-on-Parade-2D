@@ -49,7 +49,7 @@ public class PlayerMovementController : MonoBehaviour {
 	void Update () {
 
 		// Movement according to input axis
-		rb2d.velocity = new Vector2 (Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * movespeed;
+		rb2d.velocity = new Vector2 (CnControls.CnInputManager.GetAxis("Horizontal"), CnControls.CnInputManager.GetAxis("Vertical")) * movespeed;
 		// Clamp position of player ship so it doesn't go outside boundaries
 		rb2d.position = new Vector2 (Mathf.Clamp (rb2d.position.x, xRange.x, xRange.y), Mathf.Clamp (rb2d.position.y, yRange.x, yRange.y));
 
