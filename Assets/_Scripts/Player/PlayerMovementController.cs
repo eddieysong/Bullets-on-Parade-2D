@@ -11,7 +11,8 @@ public class PlayerMovementController : MonoBehaviour {
 	// configurable properties of player ship
 	[SerializeField]
 	private float movespeed = 10f;
-	private int lives = 3;
+	[SerializeField]
+	private int lives = 5;
 	private bool invulnerable = false;
 	private float invulnerableTime = 2.5f;
 

@@ -11,8 +11,8 @@ public class EnemyWeaponController : MonoBehaviour
 	[SerializeField]
 	private EnemyWeaponConfigObject weaponConfig;
 
-	[SerializeField]
-	private float delayBeforeFiring;
+//	[SerializeField]
+	private float delayBeforeFiring = 1.25f;
 
 	private float isMirror;
 	//	[SerializeField]
