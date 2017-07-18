@@ -80,4 +80,10 @@ public class EnemyMovementController : MonoBehaviour {
 			isMirror = value;
 		}
 	}
+
+	public bool IsBoss {
+		get {
+			return this.isBoss;
+		}
+	}
 }

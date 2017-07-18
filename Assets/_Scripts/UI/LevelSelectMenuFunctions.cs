@@ -26,7 +26,7 @@ public class LevelSelectMenuFunctions : MonoBehaviour {
 	void PopulateLevelSelectMenu() {
 		scrollViewContent = GameObject.Find ("Content");
 		scrollViewContent.GetComponent<RectTransform> ().sizeDelta = 
-			new Vector2 (scrollViewContent.GetComponent<RectTransform> ().sizeDelta.x, -yDistance *10* (allLevels.levels.Length + 0.5f));
+			new Vector2 (scrollViewContent.GetComponent<RectTransform> ().sizeDelta.x, -yDistance * (allLevels.levels.Length + 0.5f));
 
 		//		foreach (LevelWavesConfigObject level in allLevels.levels) {
 		for (int i = 0; i < allLevels.levels.Length; i++) {

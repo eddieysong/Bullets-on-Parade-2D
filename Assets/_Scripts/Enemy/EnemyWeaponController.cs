@@ -11,10 +11,12 @@ public class EnemyWeaponController : MonoBehaviour
 	[SerializeField]
 	private EnemyWeaponConfigObject weaponConfig;
 
-//	[SerializeField]
+	[SerializeField]
 	private float delayBeforeFiring = 1.25f;
 
 	private float isMirror;
+	private float isBoss;
+
 	//	[SerializeField]
 	//	private FiringPatternConfigObject firingPattern;
 
@@ -27,6 +29,8 @@ public class EnemyWeaponController : MonoBehaviour
 
 			// if the weapon should fire in "mirror" mode, then multiply the angles by -1
 			isMirror = gameObject.GetComponentInParent<EnemyMovementController> ().IsMirror ? -1 : 1;
+			isBoss = gameObject.GetComponentInParent<EnemyMovementController> ().IsBoss ? 2f : 1;
+
 
 			Debug.Log ("weapon config loaded");
 			StartCoroutine (FireCycle ());
@@ -60,12 +64,12 @@ public class EnemyWeaponController : MonoBehaviour
 					// if burst fire, spawn all bullets at the same time
 					// if not burst fire, spawn bullets one by one
 					// wait for time specified by both weapon (specifies delay multiplier) and firing pattern (specifies base delay)
-					yield return new WaitForSeconds (weaponConfig.firingPattern.fireDuration / weaponConfig.firingPattern.numberOfShots / weaponConfig.fireRateMultiplier);
+					yield return new WaitForSeconds (weaponConfig.firingPattern.fireDuration / weaponConfig.firingPattern.numberOfShots / weaponConfig.fireRateMultiplier / isBoss);
 				}
 			}
 
 			// wait for time between waves of bullets
-			yield return new WaitForSeconds (weaponConfig.delayBetweenFiring);
+			yield return new WaitForSeconds (weaponConfig.delayBetweenFiring / isBoss);
 		}
 	}
 }
