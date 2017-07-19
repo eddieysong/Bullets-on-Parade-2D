@@ -33,7 +33,7 @@ public class BossMovementController : EnemyMovementController {
 
 	new void Hit (float damage) {
 		this.hp -= damage;
-		Debug.Log (string.Format("Enemy has {0} hp remaining", hp.ToString()));
+//		Debug.Log (string.Format("Enemy has {0} hp remaining", hp.ToString()));
 		uiController.SendMessage ("RefreshBossHP", Mathf.Clamp(hp / maxHP, 0f, 1f), SendMessageOptions.DontRequireReceiver);
 
 		if (hp <= 0) {
@@ -82,7 +82,7 @@ public class BossMovementController : EnemyMovementController {
 //	}
 
 	// What happens when enemy collides with something
-	new void OnTriggerEnter2D (Collider2D other) {
+//	new void OnTriggerEnter2D (Collider2D other) {
 //		if (other.CompareTag ("Player")) {
 ////			Debug.Log ("Player Hit! " + Time.time);
 ////			//			Destroy (other.gameObject);
@@ -92,5 +92,5 @@ public class BossMovementController : EnemyMovementController {
 //			Destroy (gameObject);
 //
 //		}
-	}
+//	}
 }

@@ -35,7 +35,7 @@ public class PlayerBulletController : MonoBehaviour {
 	// What happens when bullet collides with an enemy
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.CompareTag ("Enemy")) {
-			Debug.Log ("Enemy Hit! " + Time.time);
+//			Debug.Log ("Enemy Hit! " + Time.time);
 			other.gameObject.SendMessage ("Hit", damage, SendMessageOptions.DontRequireReceiver);
 			Destroy (gameObject);
 		} else if (other.CompareTag ("Boundary")) {

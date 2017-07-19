@@ -22,7 +22,7 @@ public class EnemyBulletController : MonoBehaviour {
 	// What happens when bullet collides with an enemy
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.CompareTag ("Player")) {
-			Debug.Log ("Player Hit! " + Time.time);
+//			Debug.Log ("Player Hit! " + Time.time);
 			other.gameObject.SendMessage ("Hit", SendMessageOptions.DontRequireReceiver);
 			Destroy (gameObject);
 		}

@@ -21,7 +21,7 @@ public class EnemySpawnController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		uiController = GameObject.Find ("UI Controller").GetComponent<UIController> ();
-		Debug.Log (SceneParameters.currentLevel);
+//		Debug.Log (SceneParameters.currentLevel);
 		wavesData = allLevels.levels [SceneParameters.currentLevel];
 		StartCoroutine (SpawnEnemy());
 	}
@@ -47,7 +47,7 @@ public class EnemySpawnController : MonoBehaviour {
 				yield return new WaitForSeconds (2.5f);
 			}
 
-			Debug.Log ("Displaying Wave Message");
+//			Debug.Log ("Displaying Wave Message");
 			// queuing messages to display
 			if (wave.messagesToDisplay != null) {
 				uiController.SendMessage ("QueueMessages", wave.messagesToDisplay, SendMessageOptions.DontRequireReceiver);
@@ -57,7 +57,7 @@ public class EnemySpawnController : MonoBehaviour {
 				Vector2 spawnPoint = wave.startPoint + (wave.endPoint - wave.startPoint) * i / Mathf.Max(1, wave.enemyCount - 1);
 				spawnPoint.x *= isMirror;
 
-				Debug.Log ("Spawning " + wave.enemyShipConfig.name);
+//				Debug.Log ("Spawning " + wave.enemyShipConfig.name);
 
 				GameObject newEnemy = Instantiate (wave.enemyShipConfig.enemyShipPrefab, spawnPoint, Quaternion.identity);
 				newEnemy.GetComponent<EnemyMovementController> ().IsMirror = wave.isMirror;

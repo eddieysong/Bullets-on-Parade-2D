@@ -14,7 +14,7 @@ public class LevelSelectButton : MonoBehaviour {
 	}
 	
 	void LoadLevel () {
-		Debug.Log (targetLevel);
+//		Debug.Log (targetLevel);
 		SceneParameters.currentLevel = targetLevel;
 		SceneManager.LoadScene ("LevelMain");
 	}

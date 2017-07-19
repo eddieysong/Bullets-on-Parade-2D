@@ -33,7 +33,7 @@ public class EnemyMovementController : MonoBehaviour {
 
 	void Hit (float damage) {
 		this.hp -= damage;
-		Debug.Log (string.Format("Enemy has {0} hp remaining", hp.ToString()));
+//		Debug.Log (string.Format("Enemy has {0} hp remaining", hp.ToString()));
 		if (hp <= 0) {
 			Die ();
 		}

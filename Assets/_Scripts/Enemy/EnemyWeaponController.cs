@@ -32,7 +32,7 @@ public class EnemyWeaponController : MonoBehaviour
 			isBoss = gameObject.GetComponentInParent<EnemyMovementController> ().IsBoss ? 2f : 1;
 
 
-			Debug.Log ("weapon config loaded");
+//			Debug.Log ("weapon config loaded");
 			StartCoroutine (FireCycle ());
 		}
 
